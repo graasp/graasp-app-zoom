@@ -33,7 +33,7 @@ export const StudentView = ({ t, classes, username, meetingId }) => {
         <Grid item xs={12}>
           <iframe
             title={t('Meeting')}
-            src={`https://zoom.us/wc/${meetingId}/join?un=${encodedUsername}`}
+            src={`https://zoom.us/wc/${meetingId}/join?prefer=1&un=${encodedUsername}`}
             sandbox="allow-forms allow-scripts allow-same-origin allow-modals"
             allow="microphone; camera; fullscreen"
             width="100%"

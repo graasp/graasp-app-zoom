@@ -10,9 +10,7 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 import './TeacherView.css';
-import {
-  openSettings, patchAppInstance,
-} from '../../../actions';
+import { openSettings, patchAppInstance } from '../../../actions';
 import { getUsers } from '../../../actions/users';
 import Settings from './Settings';
 import { MAX_INPUT_LENGTH, MAX_ROWS } from '../../../config/settings';
@@ -50,7 +48,7 @@ export class TeacherView extends Component {
     main: {
       textAlign: 'center',
       padding: theme.spacing(),
-      marginTop: theme.spacing(5)
+      marginTop: theme.spacing(5),
     },
     container: {
       display: 'flex',
@@ -82,7 +80,7 @@ export class TeacherView extends Component {
     dispatchPatchAppInstance({
       data: newSettings,
     });
-  }, 1000);
+  }, 100);
 
   constructor(props) {
     super(props);
@@ -91,7 +89,9 @@ export class TeacherView extends Component {
   }
 
   componentDidMount() {
-    const { settings: { meetingId } } = this.props;
+    const {
+      settings: { meetingId },
+    } = this.props;
 
     if (meetingId) {
       this.setState({ meetingId });
@@ -99,12 +99,12 @@ export class TeacherView extends Component {
   }
 
   componentDidUpdate(
-    {
-      settings: { meetingId: prevPropMeetingId},
-    },
-    { meetingId: prevStateMeetingId }
+    { settings: { meetingId: prevPropMeetingId } },
+    { meetingId: prevStateMeetingId },
   ) {
-    const { settings: { meetingId } } = this.props;
+    const {
+      settings: { meetingId },
+    } = this.props;
 
     // set state here safely by ensuring that it does not cause an infinite loop
     if (prevPropMeetingId !== meetingId && prevStateMeetingId !== meetingId) {
@@ -123,12 +123,7 @@ export class TeacherView extends Component {
 
   render() {
     const { meetingId } = this.state;
-    const {
-      classes,
-      t,
-      ready,
-      dispatchOpenSettings,
-    } = this.props;
+    const { classes, t, ready, dispatchOpenSettings } = this.props;
 
     if (!ready) {
       return <Loader />;
@@ -140,7 +135,7 @@ export class TeacherView extends Component {
           <Grid container spacing={0} className={classes.grid}>
             <Grid item xs={12} className={classes.main}>
               <Typography variant="h6">
-                { t('Please enter your 9-11 digit meeting ID (numbers only).') }
+                {t('Please enter your 9-11 digit meeting ID (numbers only).')}
               </Typography>
             </Grid>
             <Grid item xs={6} className={classes.main}>
@@ -168,7 +163,7 @@ export class TeacherView extends Component {
         </div>
         <Settings />
         <Fab
-          style={{display: 'none'}}
+          style={{ display: 'none' }}
           color="primary"
           aria-label={t('Settings')}
           className={classes.fab}

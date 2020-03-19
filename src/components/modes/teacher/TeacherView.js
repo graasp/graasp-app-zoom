@@ -49,7 +49,8 @@ export class TeacherView extends Component {
     },
     main: {
       textAlign: 'center',
-      padding: theme.spacing.unit,
+      padding: theme.spacing(),
+      marginTop: theme.spacing(5)
     },
     container: {
       display: 'flex',
@@ -167,6 +168,7 @@ export class TeacherView extends Component {
         </div>
         <Settings />
         <Fab
+          style={{display: 'none'}}
           color="primary"
           aria-label={t('Settings')}
           className={classes.fab}

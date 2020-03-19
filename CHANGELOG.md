@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/graasp/graasp-app-zoom/compare/v0.1.2...v0.1.3) (2020-03-19)
+
+### Features
+
+- allow webinars and sanitise urls ([e97ee35](https://github.com/graasp/graasp-app-zoom/commit/e97ee358eb0fee2962d76808fae287a300aee9ba))
+
 ### [0.1.2](https://github.com/graasp/graasp-app-zoom/compare/v0.1.1...v0.1.2) (2020-03-19)
 
 ### Features

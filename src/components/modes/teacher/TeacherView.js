@@ -117,9 +117,16 @@ export class TeacherView extends Component {
       dispatchPatchAppInstance,
       dispatchPostAction,
     } = this.props;
+
+    // remove all non-digit characters
+    const sanitizedMeetingId = meetingId.replace(/\D+/g, '');
+
+    // set new state
+    this.setState({ meetingId: sanitizedMeetingId });
+
     const newSettings = {
       ...settings,
-      meetingId,
+      meetingId: sanitizedMeetingId,
     };
     dispatchPatchAppInstance({
       data: newSettings,
@@ -127,7 +134,7 @@ export class TeacherView extends Component {
     dispatchPostAction({
       verb: CONFIGURED,
       data: {
-        meetingId,
+        meetingId: sanitizedMeetingId,
       },
     });
   };

@@ -8,6 +8,7 @@ import LaunchIcon from '@material-ui/icons/Launch';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayIcon from '@material-ui/icons/PlayArrow';
 import Fab from '@material-ui/core/Fab';
+import { Tooltip } from '@material-ui/core';
 import MeetingNotConfigured from '../../common/MeetingNotConfigured';
 import Loader from '../../common/Loader';
 import MeetingPaused from '../../common/MeetingPaused';
@@ -24,14 +25,14 @@ const styles = theme => ({
   fab: {
     margin: theme.spacing(),
     position: 'fixed',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
+    top: theme.spacing(),
+    left: theme.spacing(),
   },
   play: {
     margin: theme.spacing(),
     position: 'fixed',
-    bottom: theme.spacing(10),
-    right: theme.spacing(2),
+    top: theme.spacing(8),
+    left: theme.spacing(),
   },
 });
 
@@ -71,6 +72,10 @@ export class StudentView extends Component {
       return <Loader />;
     }
     const encodedUsername = btoa(username);
+
+    // use dummy email for now
+    const encodedEmail = btoa('zoom@graasp.eu');
+
     return (
       <div className={classes.main}>
         <Grid container spacing={0} className={classes.container}>
@@ -80,7 +85,7 @@ export class StudentView extends Component {
             ) : (
               <iframe
                 title={t('Meeting')}
-                src={`https://zoom.us/wc/${meetingId}/join?prefer=1&un=${encodedUsername}`}
+                src={`https://zoom.us/wc/${meetingId}/join?prefer=1&un=${encodedUsername}&uel=${encodedEmail}`}
                 sandbox="allow-forms allow-scripts allow-same-origin allow-modals"
                 allow="microphone; camera; fullscreen"
                 width="100%"
@@ -91,14 +96,19 @@ export class StudentView extends Component {
           </Grid>
         </Grid>
         <Fab
+          size="small"
           color="primary"
           aria-label={t('Open with Desktop Client')}
           className={classes.fab}
           href={desktopClientLink}
+          onClick={() => this.setState({ paused: true })}
         >
-          <LaunchIcon />
+          <Tooltip title={t('Open with Zoom Desktop Client')}>
+            <LaunchIcon />
+          </Tooltip>
         </Fab>
         <Fab
+          size="small"
           color="primary"
           aria-label={paused ? t('Play') : t('Pause')}
           className={classes.play}

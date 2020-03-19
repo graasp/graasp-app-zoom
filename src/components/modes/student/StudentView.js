@@ -3,43 +3,77 @@ import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { addQueryParamsToUrl } from '../../../utils/url';
+import { connect } from 'react-redux';
+import MeetingNotConfigured from '../../common/MeetingNotConfigured';
+import Loader from '../../common/Loader';
 
-const styles = theme => ({
+const styles = () => ({
   main: {
-    textAlign: 'center',
-    margin: theme.spacing.unit,
+    flexGrow: 1,
+    height: '100%',
+    width: '100%',
   },
-  message: {
-    padding: theme.spacing.unit,
-    backgroundColor: theme.status.danger.background[500],
-    color: theme.status.danger.color,
-    marginBottom: theme.spacing.unit * 2,
-  },
+  container: {
+    height: '100%',
+  }
 });
 
-export const StudentView = ({ t, classes }) => {
+export const StudentView = ({ t, classes, username, meetingId }) => {
+  if (meetingId === '') {
+    return <MeetingNotConfigured />
+  }
+
+  if (!meetingId) {
+    return (
+      <Loader />
+    );
+  }
+  const encodedUsername = btoa(username);
   return (
-    <iframe
-      src="https://zoom.us/wc/9134413356/join?prefer=1&un=TWluZGF1Z2Fz"
-      sandbox="allow-forms allow-scripts allow-same-origin allow-modals"
-      allow="microphone; camera; fullscreen"
-      width="100%"
-      height="100%"
-    >
-    </iframe>
+    <div className={classes.main}>
+      <Grid container spacing={0} className={classes.container}>
+        <Grid item xs={12}>
+          <iframe
+            title={t('Meeting')}
+            src={`https://zoom.us/wc/${meetingId}/join?prefer=1&un=${encodedUsername}`}
+            sandbox="allow-forms allow-scripts allow-same-origin allow-modals"
+            allow="microphone; camera; fullscreen"
+            width="100%"
+            height="100%"
+            style={{border: 'none'}}
+          />
+        </Grid>
+      </Grid>
+    </div>
   );
-}
+};
 
 StudentView.propTypes = {
   t: PropTypes.func.isRequired,
   classes: PropTypes.shape({
     main: PropTypes.string,
-    message: PropTypes.string,
+    container: PropTypes.string,
   }).isRequired,
+  meetingId: PropTypes.string,
+  username: PropTypes.string,
 };
 
-const StyledComponent = withStyles(styles)(StudentView);
+StudentView.defaultProps = {
+  username: 'Guest',
+  meetingId: null,
+};
+
+const mapStateToProps = ({ appInstance, context }) => {
+  const { user: { name } = {} } = context;
+  const { settings: { meetingId }} = appInstance.content;
+  return {
+    meetingId,
+    username: name,
+  };
+};
+
+const ConnectedComponent = connect(mapStateToProps)(StudentView);
+
+const StyledComponent = withStyles(styles)(ConnectedComponent);
 
 export default withTranslation()(StyledComponent);

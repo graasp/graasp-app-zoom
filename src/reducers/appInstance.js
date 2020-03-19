@@ -10,8 +10,8 @@ import {
 import { showErrorToast } from '../utils/toasts';
 
 const DEFAULT_SETTINGS = {
-  headerVisible: true,
-  badgeGroup: 0,
+  headerVisible: false,
+  meetingId: '',
 };
 
 const INITIAL_STATE = {

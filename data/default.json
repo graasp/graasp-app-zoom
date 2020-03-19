@@ -14,7 +14,12 @@
       "_id": "5b56e70ab253020033364411"
     }
   ],
-  "lightUsers": [
+  "current": {
+    "id": "5b56e70ab253020033364411",
+    "name": "current",
+    "spaceId": "5b56e70ab253020033364411"
+  },
+  "users": [
     {
       "id": "5b56e70ab253020033364416",
       "name": "juan carlos",
@@ -41,8 +46,18 @@
       "spaceId": "5b56e70ab253020033364411"
     },
     {
-      "id": "5c055c1083d22e0211c24ad1",
+      "id": "5c055c1083d22e0211c24ad2",
       "name": "mashkour",
+      "spaceId": "5b56e70ab253020033364411"
+    },
+    {
+      "id": "5c055c1083d22e0211c24ad3",
+      "name": "ezequiel",
+      "spaceId": "5b56e70ab253020033364411"
+    },
+    {
+      "id": "5c055c1083d22e0211c24ad4",
+      "name": "denis",
       "spaceId": "5b56e70ab253020033364411"
     }
   ]

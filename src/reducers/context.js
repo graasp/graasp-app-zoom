@@ -1,4 +1,9 @@
-import { GET_CONTEXT_FAILED, GET_CONTEXT_SUCCEEDED } from '../types';
+import {
+  GET_CONTEXT_FAILED,
+  GET_CONTEXT_SUCCEEDED,
+  GET_CURRENT_USER_FAILED,
+  GET_CURRENT_USER_SUCCEEDED,
+} from '../types';
 import {
   DEFAULT_API_HOST,
   DEFAULT_LANG,
@@ -28,6 +33,13 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         ...payload,
       };
 
+    case GET_CURRENT_USER_SUCCEEDED:
+      return {
+        ...state,
+        user: payload,
+      };
+
+    case GET_CURRENT_USER_FAILED:
     case GET_CONTEXT_FAILED:
       // show error to user
       showErrorToast(payload);

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import StudentView from './modes/student/StudentView';
-import { getContext } from '../actions';
+import { getContext, getCurrentUser } from '../actions';
 import { DEFAULT_LANG, DEFAULT_MODE } from '../config/settings';
 import { DEFAULT_VIEW } from '../config/views';
 import { getAppInstance } from '../actions/appInstance';
@@ -23,8 +23,8 @@ export class App extends Component {
     lang: PropTypes.string,
     mode: PropTypes.string,
     view: PropTypes.string,
-    headerVisible: PropTypes.bool.isRequired,
     ready: PropTypes.bool.isRequired,
+    dispatchGetCurrentUser: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -38,6 +38,8 @@ export class App extends Component {
     super(props);
     // first thing to do is get the context
     props.dispatchGetContext();
+    // then get the current user
+    props.dispatchGetCurrentUser();
     // then get the app instance
     props.dispatchGetAppInstance();
   }
@@ -66,7 +68,7 @@ export class App extends Component {
   };
 
   render() {
-    const { mode, view, headerVisible, ready } = this.props;
+    const { mode, view, ready } = this.props;
 
     if (!ready) {
       return <Loader />;
@@ -92,7 +94,6 @@ export class App extends Component {
       default:
         return (
           <>
-            {headerVisible ? <Header /> : null}
             <StudentView />
           </>
         );
@@ -101,7 +102,6 @@ export class App extends Component {
 }
 
 const mapStateToProps = ({ context, appInstance }) => ({
-  headerVisible: appInstance.content.settings.headerVisible,
   lang: context.lang,
   mode: context.mode,
   view: context.view,
@@ -112,6 +112,7 @@ const mapStateToProps = ({ context, appInstance }) => ({
 const mapDispatchToProps = {
   dispatchGetContext: getContext,
   dispatchGetAppInstance: getAppInstance,
+  dispatchGetCurrentUser: getCurrentUser,
 };
 
 const ConnectedApp = connect(

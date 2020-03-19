@@ -92,6 +92,7 @@ class Settings extends Component {
         checked={headerVisible}
         onChange={this.handleChangeHeaderVisibility}
         value="headerVisibility"
+        disabled
       />
     );
 

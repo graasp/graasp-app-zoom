@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/graasp/graasp-app-zoom/compare/v0.1.3...v0.1.4) (2020-03-19)
+
+### Features
+
+- add google analytics ([82fbade](https://github.com/graasp/graasp-app-zoom/commit/82fbade49bf69a538c8a6d264d66e3f5489c3a22))
+
 ### [0.1.3](https://github.com/graasp/graasp-app-zoom/compare/v0.1.2...v0.1.3) (2020-03-19)
 
 ### Features

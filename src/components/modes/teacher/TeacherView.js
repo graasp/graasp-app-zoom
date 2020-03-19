@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -8,19 +7,21 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
-import { Typography } from '@material-ui/core';
+import { Button, Typography, Tooltip } from '@material-ui/core';
 import './TeacherView.css';
-import { openSettings, patchAppInstance } from '../../../actions';
+import { openSettings, patchAppInstance, postAction } from '../../../actions';
 import { getUsers } from '../../../actions/users';
 import Settings from './Settings';
 import { MAX_INPUT_LENGTH, MAX_ROWS } from '../../../config/settings';
 import Loader from '../../common/Loader';
+import { CONFIGURED } from '../../../config/verbs';
 
 export class TeacherView extends Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     dispatchOpenSettings: PropTypes.func.isRequired,
     dispatchPatchAppInstance: PropTypes.func.isRequired,
+    dispatchPostAction: PropTypes.func.isRequired,
     classes: PropTypes.shape({
       root: PropTypes.string,
       main: PropTypes.string,
@@ -71,17 +72,6 @@ export class TeacherView extends Component {
     meetingId: '',
   };
 
-  saveToApi = _.debounce(({ meetingId }) => {
-    const { settings, dispatchPatchAppInstance } = this.props;
-    const newSettings = {
-      ...settings,
-      meetingId,
-    };
-    dispatchPatchAppInstance({
-      data: newSettings,
-    });
-  }, 10);
-
   constructor(props) {
     super(props);
     const { dispatchGetUsers } = this.props;
@@ -118,8 +108,63 @@ export class TeacherView extends Component {
     this.setState({
       meetingId: value,
     });
-    this.saveToApi({ meetingId: value });
   };
+
+  handleClickSaveText = () => {
+    const { meetingId } = this.state;
+    const {
+      settings,
+      dispatchPatchAppInstance,
+      dispatchPostAction,
+    } = this.props;
+    const newSettings = {
+      ...settings,
+      meetingId,
+    };
+    dispatchPatchAppInstance({
+      data: newSettings,
+    });
+    dispatchPostAction({
+      verb: CONFIGURED,
+      data: {
+        meetingId,
+      },
+    });
+  };
+
+  withTooltip = (elem, disabled) => {
+    return (
+      <Tooltip title="All changes saved.">
+        <span>{React.cloneElement(elem, { disabled })}</span>
+      </Tooltip>
+    );
+  };
+
+  renderButton() {
+    const {
+      t,
+      settings: { meetingId: propsMeetingId },
+    } = this.props;
+    const { meetingId: stateMeetingId } = this.state;
+
+    // if meeting ID is different, we enable save button
+    const meetingIdIsDifferent = stateMeetingId !== propsMeetingId;
+
+    const saveButton = (
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={this.handleClickSaveText}
+        fullWidth
+      >
+        {meetingIdIsDifferent ? t('Save') : t('Saved')}
+      </Button>
+    );
+
+    return meetingIdIsDifferent
+      ? saveButton
+      : this.withTooltip(saveButton, !meetingIdIsDifferent);
+  }
 
   render() {
     const { meetingId } = this.state;
@@ -160,6 +205,11 @@ export class TeacherView extends Component {
               </form>
             </Grid>
           </Grid>
+          <Grid container spacing={0} className={classes.grid}>
+            <Grid item xs={4} className={classes.main}>
+              {this.renderButton()}
+            </Grid>
+          </Grid>
         </div>
         <Settings />
         <Fab
@@ -187,6 +237,7 @@ const mapStateToProps = ({ appInstance }) => ({
 const mapDispatchToProps = {
   dispatchGetUsers: getUsers,
   dispatchPatchAppInstance: patchAppInstance,
+  dispatchPostAction: postAction,
   dispatchOpenSettings: openSettings,
 };
 

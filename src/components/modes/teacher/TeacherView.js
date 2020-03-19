@@ -80,7 +80,7 @@ export class TeacherView extends Component {
     dispatchPatchAppInstance({
       data: newSettings,
     });
-  }, 100);
+  }, 10);
 
   constructor(props) {
     super(props);

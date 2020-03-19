@@ -15,18 +15,16 @@ const styles = () => ({
   },
   container: {
     height: '100%',
-  }
+  },
 });
 
 export const StudentView = ({ t, classes, username, meetingId }) => {
   if (meetingId === '') {
-    return <MeetingNotConfigured />
+    return <MeetingNotConfigured />;
   }
 
   if (!meetingId) {
-    return (
-      <Loader />
-    );
+    return <Loader />;
   }
   const encodedUsername = btoa(username);
   return (
@@ -35,12 +33,12 @@ export const StudentView = ({ t, classes, username, meetingId }) => {
         <Grid item xs={12}>
           <iframe
             title={t('Meeting')}
-            src={`https://zoom.us/wc/${meetingId}/join?prefer=1&un=${encodedUsername}`}
+            src={`https://zoom.us/wc/${meetingId}/join?un=${encodedUsername}`}
             sandbox="allow-forms allow-scripts allow-same-origin allow-modals"
             allow="microphone; camera; fullscreen"
             width="100%"
             height="100%"
-            style={{border: 'none'}}
+            style={{ border: 'none' }}
           />
         </Grid>
       </Grid>
@@ -65,7 +63,9 @@ StudentView.defaultProps = {
 
 const mapStateToProps = ({ appInstance, context }) => {
   const { user: { name } = {} } = context;
-  const { settings: { meetingId }} = appInstance.content;
+  const {
+    settings: { meetingId },
+  } = appInstance.content;
   return {
     meetingId,
     username: name,

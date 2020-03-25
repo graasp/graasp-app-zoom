@@ -98,12 +98,12 @@ export class StudentView extends Component {
         <Fab
           size="small"
           color="primary"
-          aria-label={t('Open with Desktop Client')}
+          aria-label={t('Open with the Zoom Desktop Client')}
           className={classes.fab}
           href={desktopClientLink}
           onClick={() => this.setState({ paused: true })}
         >
-          <Tooltip title={t('Open with Zoom Desktop Client')}>
+          <Tooltip title={t('Open with the Zoom Desktop Client')}>
             <LaunchIcon />
           </Tooltip>
         </Fab>

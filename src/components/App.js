@@ -24,6 +24,7 @@ export class App extends Component {
     mode: PropTypes.string,
     view: PropTypes.string,
     ready: PropTypes.bool.isRequired,
+    standalone: PropTypes.bool.isRequired,
     dispatchGetCurrentUser: PropTypes.func.isRequired,
   };
 
@@ -68,9 +69,9 @@ export class App extends Component {
   };
 
   render() {
-    const { mode, view, ready } = this.props;
+    const { mode, view, ready, standalone } = this.props;
 
-    if (!ready) {
+    if (!standalone && !ready) {
       return <Loader />;
     }
 
@@ -105,6 +106,7 @@ const mapStateToProps = ({ context, appInstance }) => ({
   lang: context.lang,
   mode: context.mode,
   view: context.view,
+  standalone: context.standalone,
   appInstanceId: context.appInstanceId,
   ready: appInstance.ready,
 });
@@ -115,9 +117,6 @@ const mapDispatchToProps = {
   dispatchGetCurrentUser: getCurrentUser,
 };
 
-const ConnectedApp = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(App);
+const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
 
 export default withTranslation()(ConnectedApp);

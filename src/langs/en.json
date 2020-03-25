@@ -1,7 +1,16 @@
 {
   "translations": {
-    "This is the student view. Switch to the teacher view by clicking on the URL below.": "This is the student view. Switch to the teacher view by clicking on the URL below.",
-    "This is the teacher view. Switch to the student view by clicking on the URL below.": "This is the teacher view. Switch to the student view by clicking on the URL below.",
-    "Welcome to the Graasp App Starter Kit": "Welcome to the Graasp App Starter Kit"
+    "This meeting has not been configured.": "This meeting has not been configured.",
+    "You have paused your participation.": "You have paused your participation.",
+    "Meeting": "Meeting",
+    "Play": "Play",
+    "Pause": "Pause",
+    "Open with the Zoom Desktop Client": "Open with the Zoom Desktop Client",
+    "Settings": "Settings",
+    "Meeting ID": "Meeting ID",
+    "Save": "Save",
+    "Saved": "Saved",
+    "Please enter your 9-11 digit meeting ID (numbers only).": "Please enter your 9-11 digit meeting ID (numbers only).",
+    "E.g. 123456789": "E.g. 123456789"
   }
 }
